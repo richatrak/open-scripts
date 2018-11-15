@@ -122,4 +122,4 @@ X11_FORWARDING=true
 amazon_os
 
 prevent_process_snooping
-request_eip
+
