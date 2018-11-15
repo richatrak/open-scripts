@@ -42,7 +42,47 @@ function setup_environment_variables() {
           LOCAL_IP_ADDRESS INSTANCE_ID
 }
 
+function harden_ssh_security () {
+    # Allow ec2-user only to access this folder and its content
+    #chmod -R 770 /var/log/bastion
+    #setfacl -Rdm other:0 /var/log/bastion
 
+    # Make OpenSSH execute a custom script on logins
+    echo -e "\nForceCommand /usr/bin/bastion/shell" >> /etc/ssh/sshd_config
+
+
+
+cat <<'EOF' >> /usr/bin/bastion/shell
+bastion_mnt="/data/log/bastion"
+bastion_log="bastion.log"
+# Check that the SSH client did not supply a command. Only SSH to instance should be allowed.
+export Allow_SSH="ssh"
+export Allow_SCP="scp"
+if [[ -z $SSH_ORIGINAL_COMMAND ]] || [[ $SSH_ORIGINAL_COMMAND =~ ^$Allow_SSH ]] || [[ $SSH_ORIGINAL_COMMAND =~ ^$Allow_SCP ]]; then
+#Allow ssh to instance and log connection
+    if [ -z "$SSH_ORIGINAL_COMMAND" ]; then
+        /bin/bash
+        exit 0
+    else
+        $SSH_ORIGINAL_COMMAND
+    fi
+log_file=`echo "$log_shadow_file_location"`
+DATE_TIME_WHOAMI="`whoami`:`date "+%Y-%m-%d %H:%M:%S"`"
+LOG_ORIGINAL_COMMAND=`echo "$DATE_TIME_WHOAMI:$SSH_ORIGINAL_COMMAND"`
+echo "$LOG_ORIGINAL_COMMAND" >> "${bastion_mnt}/${bastion_log}"
+log_dir="/data/log/bastion/"
+else
+# The "script" program could be circumvented with some commands
+# (e.g. bash, nc). Therefore, I intentionally prevent users
+# from supplying commands.
+echo "This bastion supports interactive sessions only. Do not supply a command"
+exit 1
+fi
+EOF
+
+    # Make the custom script executable
+    chmod a+x /usr/bin/bastion/shell
+}
 
 function amazon_os () {
     
@@ -119,6 +159,7 @@ setup_environment_variables
 TCP_FORWARDING=true
 X11_FORWARDING=true
 
+harden_ssh_security
 amazon_os
 
 prevent_process_snooping
