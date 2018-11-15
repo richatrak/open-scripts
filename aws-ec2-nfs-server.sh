@@ -1,6 +1,8 @@
 #!/bin/bash
 
 mkdir -p /data/nfs
+chmod -R o+w /data/nfs
+
 echo "/data/nfs *(rw)" >> /etc/exports
 
 service rpcbind restart
