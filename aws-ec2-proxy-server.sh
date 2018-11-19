@@ -35,7 +35,7 @@ server {
 }
 
 upstream ${varProxyTarget} {
-} #upstream API
+} #upstream ${varProxyTarget}
 EOF
 
 ln -s /etc/nginx/sites-available/${varHostName}.localdomain.conf /etc/nginx/sites-enabled/${varHostName}.localdomain.conf
