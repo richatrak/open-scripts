@@ -38,4 +38,4 @@ upstream ${varProxyTarget} {
 }
 EOF
 
-ln -s /etc/sites-available/${varHostName}.localdomain.conf /etc/sites-enabled/${varHostName}.localdomain.conf
+ln -s /etc/nginx/sites-available/${varHostName}.localdomain.conf /etc/nginx/sites-enabled/${varHostName}.localdomain.conf
