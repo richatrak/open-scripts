@@ -1,7 +1,8 @@
 #!/bin/bash
 
 mkdir -p /data/nfs
-chmod -R o+w /data/nfs
+#chmod -R o+w /data/nfs
+chmod -R 777 /data/nfs
 touch /data/nfs/nfs-server
 
 echo "/data/nfs *(rw)" >> /etc/exports
