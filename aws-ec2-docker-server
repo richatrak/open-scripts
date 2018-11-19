@@ -1,5 +1,6 @@
 #!/bin/bash
 
+SERVER_NAME=$(cat /etc/aws.ec2.instance.name)
 DOCKER_IMAGE_FULL_NAME=280666639932.dkr.ecr.us-west-2.amazonaws.com/iadea.service.$((cat /etc/aws.ec2.instance.name) | tr '[:upper:]' '[:lower:]').v1:latest
 
 REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
@@ -12,4 +13,4 @@ service docker start
 aws ecr get-login --no-include-email | sh
 
 docker pull $DOCKER_IMAGE_FULL_NAME
-docker run --rm -p 80:80 $DOCKER_IMAGE_FULL_NAME
+#docker run --rm -name ${SERVER_NAME} -p 80:80 --add-host ${DOCKER_IMAGE_FULL_NAME} 
