@@ -10,9 +10,9 @@ echo set tabstop=2 >> /etc/vimrc
 echo set autoindent >> /etc/vimrc
 
 varHostName=$(cat /etc/aws.ec2.instance.name)
-hostnamectl set-hostname ${varHostname}.localdomain
-echo HOSTNAME=${varHostname}.localdomain >> /etc/sysconfig/network
-sed -i -e "s/localhost localhost\./${varHostname} ${varHostname}./g" /etc/hosts
+hostnamectl set-hostname ${varHostName}.localdomain
+echo HOSTNAME=${varHostName}.localdomain >> /etc/sysconfig/network
+sed -i -e "s/localhost localhost\./${varHostName} ${varHostName}./g" /etc/hosts
 
 diskPath=/dev/`readlink /dev/sdb`
 mkfs -t xfs ${diskPath}
