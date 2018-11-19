@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # ----- Variable -----
-confStartLine=$(grep -n "    server {" /etc/nginx/nginx.conf | head -n 1 | awk -F ":" '{print $1}')
-confEndLine=$(grep -n "^    }" /etc/nginx/nginx.conf | head -n 1 | awk -F ":" '{print $1}')
 
 varHostName=$(cat /etc/aws.ec2.instance.name)
 varProxyTarget=${varHostName:0:-5}
 
 # ----- Install -----
 amazon-linux-extras install nginx1.12 -y
+
+confStartLine=$(grep -n "    server {" /etc/nginx/nginx.conf | head -n 1 | awk -F ":" '{print $1}')
+confEndLine=$(grep -n "^    }" /etc/nginx/nginx.conf | head -n 1 | awk -F ":" '{print $1}')
+
 
 # ----- Pre-Config -----
 sed -i -e "${confStartLine},${confEndLine}s/^/#/g" /etc/nginx/nginx.conf
