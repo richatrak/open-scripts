@@ -13,7 +13,7 @@ confEndLine=$(grep -n "^    }" /etc/nginx/nginx.conf | head -n 1 | awk -F ":" '{
 
 # ----- Pre-Config -----
 sed -i -e "${confStartLine},${confEndLine}s/^/#/g" /etc/nginx/nginx.conf
-sed -i "${confStartLine} i \ \ \ \ include /etc/nginx/sites-enabled/*.conf" /etc/nginx/nginx.conf
+sed -i "${confStartLine} i \ \ \ \ include /etc/nginx/sites-enabled/*.conf;" /etc/nginx/nginx.conf
 
 mkdir -p /etc/nginx/sites-available
 mkdir -p /etc/nginx/sites-enabled
