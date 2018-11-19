@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # ----- Variable -----
-confStartLine=$(grep -n "    server {" nginx.conf | head -n 1 | awk -F ":" '{print $1}')
-confEndLine=$(grep -n "^    }" nginx.conf | head -n 1 | awk -F ":" '{print $1}')
+confStartLine=$(grep -n "    server {" /etc/nginx/nginx.conf | head -n 1 | awk -F ":" '{print $1}')
+confEndLine=$(grep -n "^    }" /etc/nginx/nginx.conf | head -n 1 | awk -F ":" '{print $1}')
 
 varHostName=$(cat /etc/aws.ec2.instance.name)
 varProxyTarget=${varHostName:0:-5}
@@ -12,7 +12,7 @@ amazon-linux-extras install nginx1.12 -y
 
 # ----- Pre-Config -----
 sed -i -e "${confStartLine},${confEndLine}s/^/#/g" /etc/nginx/nginx.conf
-sed -i "${confStartLine} i \ \ \ \ include /etc/nginx/sites-enabled/*.conf" nginx.conf
+sed -i "${confStartLine} i \ \ \ \ include /etc/nginx/sites-enabled/*.conf" /etc/nginx/nginx.conf
 
 mkdir -p /etc/nginx/sites-available
 mkdir -p /etc/nginx/sites-enabled
