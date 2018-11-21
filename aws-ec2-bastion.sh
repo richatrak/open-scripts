@@ -138,13 +138,7 @@ EOF
     systemctl enable awslogsd.service
 
 
-    #Run security updates
-cat <<'EOF' >> ~/mycron
-0 0 * * * root yum -y update --security
-EOF
-    cat ~/mycron >> /etc/crontab
-    rm -f ~/mycron
-}
+
 
 function prevent_process_snooping() {
     # Prevent bastion host users from viewing processes owned by other users.
