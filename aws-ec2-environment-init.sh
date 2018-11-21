@@ -20,6 +20,6 @@ mkdir /data
 echo ${diskPath} /data xfs defaults,nofail 0 2 >> /etc/fstab
 mount -a
 
-echo 0 0 * * * root yum -y update --security >> /etc/crontab
+echo "0 0 * * * root yum -y update --security" >> /etc/crontab
 
 yum -y update
