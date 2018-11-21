@@ -17,7 +17,7 @@ sed -i -e "s/localhost localhost\./${varHostName} ${varHostName}./g" /etc/hosts
 diskPath=/dev/`readlink /dev/sdb`
 mkfs -t xfs ${diskPath}
 mkdir /data
-echo ${diskPath} /data xfs defaults,nofail 0 2 >> /etc/fstab
+echo "${diskPath} /data xfs defaults,nofail 0 2" >> /etc/fstab
 mount -a
 
 echo "0 0 * * * root yum -y update --security" >> /etc/crontab
