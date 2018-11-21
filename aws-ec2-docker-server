@@ -13,4 +13,4 @@ service docker start
 aws ecr get-login --no-include-email | sh
 
 docker pull $DOCKER_IMAGE_FULL_NAME
-#docker run --rm -name ${SERVER_NAME} -p 80:80 --add-host ${DOCKER_IMAGE_FULL_NAME} 
+echo "@reboot root sh /etc/iadea/iadea.docker.sh" >> /etc/crontab 
