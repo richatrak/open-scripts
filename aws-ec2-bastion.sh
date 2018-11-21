@@ -137,7 +137,7 @@ EOF
     systemctl start awslogsd.service
     systemctl enable awslogsd.service
 
-
+}
 
 
 function prevent_process_snooping() {
