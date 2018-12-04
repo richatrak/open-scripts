@@ -38,6 +38,25 @@ server {
   }
 }
 
+server {
+         
+  listen 16821 default_server;
+  listen [::]:16821 default_server;
+  server_name _;
+  root /usr/share/nginx/html;
+  
+  include /etc/nginx/default.d/*.conf;
+
+  add_header 'Access-Control-Allow-Origin'   '*';
+  add_header 'Access-Control-Allow-Methods'  'GET, POST, PATCH, DELETE, OPTIONS';
+  add_header 'Access-Control-Allow-Headers'  'Origin, X-Requested-With, Content-Type, Accept, Authorization, IAdeaCare-Player-ID, X-HTTP-Method-Override';
+  add_header 'Access-Control-Expose-Headers' 'IAdea-Server-Timestamp-Milliseconds, IAdeaCare-Server-File-Milliseconds';
+
+  add_header 'Content-Type' 'application/json';
+  return 200 '{"data": null , "error": "SERVER.BUSY", "errorMessage": "Server is busy, please retry with exponential backoff."}';
+
+}
+
 upstream ${varProxyTarget} {
 } #upstream ${varProxyTarget}
 EOF
