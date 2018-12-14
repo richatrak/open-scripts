@@ -30,7 +30,7 @@ server {
   include /etc/nginx/default.d/*.conf;
 
   location / {
-    if ( $request_method = 'OPTIONS' )
+    if ( \$request_method = 'OPTIONS' )
     {
       add_header 'Access-Control-Allow-Origin'   '*';
       add_header 'Access-Control-Allow-Methods'  'GET, POST, PATCH, DELETE, OPTIONS';
