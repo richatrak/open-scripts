@@ -68,6 +68,7 @@ server {
 }
 
 upstream ${varProxyTarget} {
+  server localhost:16821 backup;
 } #upstream ${varProxyTarget}
 EOF
 
