@@ -8,7 +8,9 @@ REGION=${REGION:0:-1}
 
 source <(curl -s https://zeus.1adea.com/api/iCare.safeServer.awsKey?region=${REGION})
 
-yum install -y docker
+amazon-linux-extras install docker
+# yum install -y docker
+
 service docker start
 systemctl enable docker
 aws ecr get-login --no-include-email | sh
